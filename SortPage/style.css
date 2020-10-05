@@ -1,0 +1,139 @@
+/* reset styles */
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+button:-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+/* wrapper */
+
+.wrapper {
+    height: 100vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    background: white;
+}
+
+/* goods */
+
+.goods {
+    height: 80vh;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background: white;
+}
+
+/* sort_button */
+
+.goods_sort_button {
+    height: 8vh;
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    color: white;
+    font-size: 3vh;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    cursor: pointer;
+    outline: none;
+}
+
+.goods_sort_button:hover {
+    opacity: 0.8;
+}
+
+.sort_button_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2vh;
+    width: 20%;
+}
+
+.sort_button_arrow {
+    height: 3vh;
+    width: 2vw;
+    transition: all 1s ease;
+    opacity: 0;
+    color: white;
+}
+
+.goods_sort_button:focus .sort_button_arrow {
+    opacity: 1;
+}
+
+/* goods_list */
+
+.goods_list {
+    height: 60vh;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.list_item {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item_img {
+    height: 98%;
+    width: 45%;
+    border: 2px solid #BC9CFF;
+    border-radius: 22px;
+}
+
+.item_description {
+    height: 5vh;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.description_name,.description_price {
+    display: block;
+    width: 100%;
+    height: 2vh;
+    font-size: 2vh;
+}
+
+.description_name {
+    color: #BC9CFF;
+}
