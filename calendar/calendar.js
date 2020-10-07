@@ -6,6 +6,7 @@ let currentMonth = nowDate.getMonth();
 let currentYear = nowDate.getFullYear();
 let firstDayOfCurrentMonth = new Date(currentYear, currentMonth, 1);
 let arrayOfMonth = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+let arrayOfDayNumbers = [];
 
 createCalendar();
 
@@ -29,6 +30,7 @@ function createCalendar() {
         let tr = document.createElement('tr');
 
         while (i < 7) {
+            let div = document.createElement('div');
             let td = document.createElement('td');
             let checkYearOfDay = dayOfMonth.getFullYear();
             let checkMonthOfDay = dayOfMonth.getMonth();
@@ -50,6 +52,7 @@ function createCalendar() {
             }
             
             tr.appendChild(td);
+            td.appendChild(div);
             td.classList.add('day');
 
             if (checkMonthOfDay < currentMonth || (trCount == 0 && i < dayOfWeek)) {
@@ -62,6 +65,7 @@ function createCalendar() {
 
             if (checkCurrentDay == today.getDate() && checkMonthOfDay == today.getMonth() && checkYearOfDay == today.getFullYear() && i >= dayOfWeek) {
                 td.classList.add('today');
+                td.setAttribute('id', 'today');
             }
             i++;
         }
@@ -70,7 +74,6 @@ function createCalendar() {
         trCount++;
     }
 
-    let arrayOfNumbers = [];
     for (let i = 0; i < document.getElementsByClassName('day').length; i++) {
 
         document.getElementsByClassName('day')[i].onclick = function() {
@@ -79,83 +82,138 @@ function createCalendar() {
             if (document.getElementsByClassName('chosen_day').length == 2) {
                 
                 for (let k = 0; k < document.getElementsByClassName('day').length; k++) {
-                    document.getElementsByClassName('day')[k].classList.remove('day_of_the_selected_range');
-                }
 
-                if (i > arrayOfNumbers[0] && i != arrayOfNumbers[1]) {
-                    document.getElementsByClassName('chosen_day')[1].classList.remove('chosen_day');
-                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
-                    arrayOfNumbers.splice(1, 1, i);
-                } else if(i < arrayOfNumbers[0]) {
-                    document.getElementsByClassName('chosen_day')[0].classList.remove('chosen_day');
-                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
-                    arrayOfNumbers.splice(0, 1, i);
-                } else if(i == arrayOfNumbers[1]) {
-                    document.getElementsByClassName('chosen_day')[1].classList.remove('chosen_day');
-                    arrayOfNumbers.pop();
-                } else if(i == arrayOfNumbers[0]) {
-                    document.getElementsByClassName('chosen_day')[0].classList.remove('chosen_day');
-                    arrayOfNumbers.splice(0, 1);
-                }
-
-                for (let j = arrayOfNumbers[0] + 1; j < arrayOfNumbers[1]; j++) {
-                    
-                    if (document.getElementsByClassName('day')[j].classList.contains('today')) {
-                        document.getElementsByClassName('day')[j].classList.remove('today');
+                    if (document.getElementsByClassName('day')[k].lastChild.classList.contains('first_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.remove('first_day_of_the_selected_range');
+                    } else if (document.getElementsByClassName('day')[k].lastChild.classList.contains('last_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('last_day_of_the_selected_range');
+                    } else {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('day_of_the_selected_range');
                     }
 
-                    document.getElementsByClassName('day')[j].classList.add('day_of_the_selected_range');
+                }
+
+                document.getElementById('today').classList.add('today');
+
+                if (i > arrayOfDayNumbers[0] && i != arrayOfDayNumbers[1]) {
+                    document.getElementsByClassName('chosen_day')[1].classList.remove('chosen_day');
+                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
+                    arrayOfDayNumbers.splice(1, 1, i);
+
+                    for (let j = arrayOfDayNumbers[0] + 1; j < arrayOfDayNumbers[1]; j++) {
+                    
+                        if (document.getElementsByClassName('day')[j].classList.contains('today')) {
+                            document.getElementsByClassName('day')[j].classList.remove('today');
+                        }
+    
+                        document.getElementsByClassName('day')[j].lastChild.classList.add('day_of_the_selected_range');
+                    }
+    
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.add('first_day_of_the_selected_range');
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[1]].lastChild.classList.add('last_day_of_the_selected_range');
+
+                } else if(i < arrayOfDayNumbers[0]) {
+                    document.getElementsByClassName('chosen_day')[0].classList.remove('chosen_day');
+                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
+                    arrayOfDayNumbers.splice(0, 1, i);
+
+                    for (let j = arrayOfDayNumbers[0] + 1; j < arrayOfDayNumbers[1]; j++) {
+                    
+                        if (document.getElementsByClassName('day')[j].classList.contains('today')) {
+                            document.getElementsByClassName('day')[j].classList.remove('today');
+                        }
+    
+                        document.getElementsByClassName('day')[j].lastChild.classList.add('day_of_the_selected_range');
+                    }
+    
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.add('first_day_of_the_selected_range');
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[1]].lastChild.classList.add('last_day_of_the_selected_range');
+
+                } else if(i == arrayOfDayNumbers[1]) {
+                    document.getElementsByClassName('chosen_day')[1].lastChild.classList.remove('last_day_of_the_selected_range');
+                    document.getElementsByClassName('chosen_day')[1].classList.remove('chosen_day');
+                    arrayOfDayNumbers.pop();
+                } else if(i == arrayOfDayNumbers[0]) {
+                    document.getElementsByClassName('chosen_day')[0].lastChild.classList.remove('first_day_of_the_selected_range');
+                    document.getElementsByClassName('chosen_day')[0].classList.remove('chosen_day');
+                    arrayOfDayNumbers.splice(0, 1);
                 }
             
             } else if (document.getElementsByClassName('chosen_day').length == 1) {
 
                 for (let k = 0; k < document.getElementsByClassName('day').length; k++) {
-                    document.getElementsByClassName('day')[k].classList.remove('day_of_the_selected_range');
+
+                    if (document.getElementsByClassName('day')[k].lastChild.classList.contains('first_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.remove('first_day_of_the_selected_range');
+                    } else if (document.getElementsByClassName('day')[k].lastChild.classList.contains('last_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('last_day_of_the_selected_range');
+                    } else {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('day_of_the_selected_range');
+                    }
+                    
                 }
 
-                if (i > arrayOfNumbers[0]) {
-                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
-                    arrayOfNumbers.push(i);
+                document.getElementById('today').classList.add('today');
 
-                    for (let j = arrayOfNumbers[0] + 1; j < arrayOfNumbers[1]; j++) {
+                if (i > arrayOfDayNumbers[0]) {
+                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
+                    arrayOfDayNumbers.push(i);
+
+                    for (let j = arrayOfDayNumbers[0] + 1; j < arrayOfDayNumbers[1]; j++) {
                     
                         if (document.getElementsByClassName('day')[j].classList.contains('today')) {
                             document.getElementsByClassName('day')[j].classList.remove('today');
                         }
                     
-                        document.getElementsByClassName('day')[j].classList.add('day_of_the_selected_range');
+                        document.getElementsByClassName('day')[j].lastChild.classList.add('day_of_the_selected_range');
                     }
 
-                } else if (i < arrayOfNumbers[0]) {
-                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
-                    arrayOfNumbers.unshift(i);
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.add('first_day_of_the_selected_range');
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[1]].lastChild.classList.add('last_day_of_the_selected_range');
 
-                    for (let j = arrayOfNumbers[0] + 1; j < arrayOfNumbers[1]; j++) {
+                } else if (i < arrayOfDayNumbers[0]) {
+                    document.getElementsByClassName('day')[i].classList.add('chosen_day');
+                    arrayOfDayNumbers.unshift(i);
+
+                    for (let j = arrayOfDayNumbers[0] + 1; j < arrayOfDayNumbers[1]; j++) {
                     
                         if (document.getElementsByClassName('day')[j].classList.contains('today')) {
                             document.getElementsByClassName('day')[j].classList.remove('today');
                         }
                     
-                        document.getElementsByClassName('day')[j].classList.add('day_of_the_selected_range');
+                        document.getElementsByClassName('day')[j].lastChild.classList.add('day_of_the_selected_range');
                     }
 
-                } else if(i == arrayOfNumbers[0]) {
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.add('first_day_of_the_selected_range');
+                    document.getElementsByClassName('day')[arrayOfDayNumbers[1]].lastChild.classList.add('last_day_of_the_selected_range');
+
+                } else if(i == arrayOfDayNumbers[0]) {
                     document.getElementsByClassName('chosen_day')[0].classList.remove('chosen_day');
-                    arrayOfNumbers.pop();
+                    arrayOfDayNumbers.pop();
                 }
 
             } else {
 
                 for (let k = 0; k < document.getElementsByClassName('day').length; k++) {
-                    document.getElementsByClassName('day')[k].classList.remove('day_of_the_selected_range');
+                    
+                    if (document.getElementsByClassName('day')[k].lastChild.classList.contains('first_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[arrayOfDayNumbers[0]].lastChild.classList.remove('first_day_of_the_selected_range');
+                    } else if (document.getElementsByClassName('day')[k].lastChild.classList.contains('last_day_of_the_selected_range')) {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('last_day_of_the_selected_range');
+                    } else {
+                        document.getElementsByClassName('day')[k].lastChild.classList.remove('day_of_the_selected_range');
+                    }
+
                 }
+
+                document.getElementById('today').classList.add('today');
 
                 if (document.getElementsByClassName('day')[i].classList.contains('chosen_day')) {
                     document.getElementsByClassName('day')[i].classList.remove('chosen_day');
-                    arrayOfNumbers.pop();
+                    arrayOfDayNumbers.pop();
                 } else {
                     document.getElementsByClassName('day')[i].classList.add('chosen_day');
-                    arrayOfNumbers.push(i);
+                    arrayOfDayNumbers.push(i);
                 }
 
             }
@@ -196,16 +254,26 @@ function changeMonth() {
 
 }
 
-//function clearSelectedRange() {
-//
- //   for (let i = 0; i < document.getElementsByClassName('day').length; i++) {
-//
- //       if (document.getElementsByClassName('day')[i].classList.contains('chosen_day')) {
- //           document.getElementsByClassName('day')[i].classList.remove('chosen_day');
-  //      } else if (document.getElementsByClassName('day')[i].classList.contains('day_of_the_selected_range')) {
-  //          document.getElementsByClassName('day')[i].classList.remove('day_of_the_selected_range');
-  //      }
+function clearSelectedRange() {
 
-  //  }
+    for (let i = 0; i < document.getElementsByClassName('day').length; i++) {
 
-//}
+        if (document.getElementsByClassName('day')[i].classList.contains('chosen_day')) {
+           
+           if (document.getElementsByClassName('day')[i].lastChild.classList.contains('first_day_of_the_selected_range')) {
+            document.getElementsByClassName('day')[i].lastChild.classList.remove('first_day_of_the_selected_range');
+           } else if (document.getElementsByClassName('day')[i].lastChild.classList.contains('last_day_of_the_selected_range')) {
+            document.getElementsByClassName('day')[i].lastChild.classList.remove('last_day_of_the_selected_range');
+           }
+
+           document.getElementsByClassName('day')[i].classList.remove('chosen_day');
+        } else if (document.getElementsByClassName('day')[i].lastChild.classList.contains('day_of_the_selected_range')) {
+            document.getElementsByClassName('day')[i].lastChild.classList.remove('day_of_the_selected_range');
+        }
+
+        document.getElementById('today').classList.add('today');
+        arrayOfDayNumbers.splice(0, 2);
+
+    }
+
+}
