@@ -31,6 +31,7 @@ function createCalendar() {
 
         while (i < 7) {
             let div = document.createElement('div');
+            let span = document.createElement('span');
             let td = document.createElement('td');
             let checkYearOfDay = dayOfMonth.getFullYear();
             let checkMonthOfDay = dayOfMonth.getMonth();
@@ -40,18 +41,19 @@ function createCalendar() {
 
                 if (i < dayOfWeek) {
                     let dayOfPreviousMonth = new Date(currentYear, currentMonth, -(dayOfWeek - (i + 1)));
-                    td.innerHTML = dayOfPreviousMonth.getDate();
+                    span.innerHTML = dayOfPreviousMonth.getDate();
                 } else {
-                    td.innerHTML = dayOfMonth.getDate();
+                    span.innerHTML = dayOfMonth.getDate();
                     dayOfMonth.setDate(dayOfMonth.getDate() + 1);
                 }
 
             } else {
-                td.innerHTML = dayOfMonth.getDate();
+                span.innerHTML = dayOfMonth.getDate();
                 dayOfMonth.setDate(dayOfMonth.getDate() + 1);
             }
             
             tr.appendChild(td);
+            td.appendChild(span);
             td.appendChild(div);
             td.classList.add('day');
 
