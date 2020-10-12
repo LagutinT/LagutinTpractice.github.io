@@ -221,7 +221,7 @@ thead {
     line-height: 15px;
     color: #BC9CFF; 
 }
-  
+
 tr {
     display: flex;
     flex-direction: row;
@@ -235,6 +235,7 @@ tr {
     justify-content: center;
     height: 40px;
     width: 40px;
+    position: relative;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: normal;
@@ -264,8 +265,32 @@ tr {
 }
 
 .day_of_the_selected_range {
+    width:  40px;
+    height: 40px;
+    position: absolute;
+    left: 0px;
     background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    opacity: 0.5;
 }
+
+.first_day_of_the_selected_range {
+    width:  20px;
+    height: 40px;
+    position: absolute;
+    right: 0px;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    opacity: 0.5;
+}
+
+.last_day_of_the_selected_range {
+    width:  20px;
+    height: 40px;
+    position: absolute;
+    left: 0px;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    opacity: 0.5;
+}
+
 
 /* calendar_footer */
 .calendar_footer {
@@ -276,7 +301,7 @@ tr {
     width: 87.5%; 
 }
     
-.calendar_footer p:first-child {
+.calendar_footer .button_clear {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -288,10 +313,11 @@ tr {
     font-size: 12px;
     line-height: 15px;
     text-transform: uppercase;
-    color: rgba(31, 32, 65, 0.5); 
+    color: rgba(31, 32, 65, 0.5);
+    cursor: pointer; 
 }
     
-.calendar_footer p:nth-child(2) {
+.calendar_footer .button_apply {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -304,4 +330,5 @@ tr {
     line-height: 15px;
     text-transform: uppercase;
     color: #BC9CFF; 
+    cursor: pointer;
 }
