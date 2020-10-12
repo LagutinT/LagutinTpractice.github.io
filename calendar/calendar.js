@@ -93,7 +93,9 @@ function createCalendar() {
 
                 }
 
-                document.getElementById('today').classList.add('today');
+                if (currentMonth == today.getMonth() && currentYear == today.getFullYear()) {
+                    document.getElementById('today').classList.add('today');
+                }
 
                 if (i > arrayOfDayNumbers[0] && i != arrayOfDayNumbers[1]) {
                     document.getElementsByClassName('chosen_day')[1].classList.remove('chosen_day');
@@ -153,7 +155,9 @@ function createCalendar() {
                     
                 }
 
-                document.getElementById('today').classList.add('today');
+                if (currentMonth == today.getMonth() && currentYear == today.getFullYear()) {
+                    document.getElementById('today').classList.add('today');
+                }
 
                 if (i > arrayOfDayNumbers[0]) {
                     document.getElementsByClassName('day')[i].classList.add('chosen_day');
@@ -206,7 +210,9 @@ function createCalendar() {
 
                 }
 
-                document.getElementById('today').classList.add('today');
+                if (currentMonth == today.getMonth() && currentYear == today.getFullYear()) {
+                    document.getElementById('today').classList.add('today');
+                }
 
                 if (document.getElementsByClassName('day')[i].classList.contains('chosen_day')) {
                     document.getElementsByClassName('day')[i].classList.remove('chosen_day');
@@ -226,6 +232,7 @@ function createCalendar() {
 }
 
 function nextMonth() {
+    arrayOfDayNumbers = [];
     changeMonth();
     nowDate = new Date(currentYear, currentMonth + 1);
     currentMonth = nowDate.getMonth();
@@ -236,6 +243,7 @@ function nextMonth() {
 }
 
 function previousMonth() {
+    arrayOfDayNumbers = [];
     changeMonth();
     nowDate = new Date(currentYear, currentMonth - 1);
     currentMonth = nowDate.getMonth();
